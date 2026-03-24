@@ -1,8 +1,17 @@
+[user]
+	name = SchaeferAnjon
+	email = 168791945+SchaeferAnjon@users.noreply.github.com
+[core]
+	autocrlf = input
+	quotepath = false
+[init]
+	defaultBranch = main
 [filter "lfs"]
-	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[user]
-	name = SchaeferAnjon
-	email = schaeferanjon@gmail.com
+	clean = git-lfs clean -- %f
+[http]
+	postBuffer = 524288000
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
