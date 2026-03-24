@@ -1,0 +1,82 @@
+# Starship Prompt - Rainbow Bar Style
+# Theme: Catppuccin Mocha compatible
+
+format = """
+[](fg:#f38ba8)\
+[ ](bg:#f38ba8 fg:#1e1e2e)\
+[](fg:#f38ba8 bg:#fab387)\
+[$user](bg:#fab387 fg:#1e1e2e)\
+[](fg:#fab387 bg:#f9e2af)\
+[$directory](bg:#f9e2af fg:#1e1e2e)\
+[](fg:#f9e2af bg:#a6e3a1)\
+[$git_branch$git_status](bg:#a6e3a1 fg:#1e1e2e)\
+[](fg:#a6e3a1 bg:#89dceb)\
+[$nodejs$python$golang$rust$java](bg:#89dceb fg:#1e1e2e)\
+[](fg:#89dceb bg:#cba6f7)\
+[$time](bg:#cba6f7 fg:#1e1e2e)\
+[](fg:#cba6f7)\
+\n$character"""
+
+[character]
+success_symbol = "[❯](bold #a6e3a1)"
+error_symbol = "[❯](bold #f38ba8)"
+
+[username]
+show_always = true
+style_user = "bg:#fab387 fg:#1e1e2e"
+style_root = "bg:#fab387 fg:#1e1e2e"
+format = "[ $user ]($style)"
+disabled = false
+
+[directory]
+style = "bg:#f9e2af fg:#1e1e2e"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = ".../"
+
+[directory.substitutions]
+"Documents" = " "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Developer" = " "
+
+[git_branch]
+symbol = " "
+style = "bg:#a6e3a1 fg:#1e1e2e"
+format = "[ $symbol$branch ]($style)"
+
+[git_status]
+style = "bg:#a6e3a1 fg:#1e1e2e"
+format = "[$all_status$ahead_behind]($style)"
+
+[nodejs]
+symbol = " "
+style = "bg:#89dceb fg:#1e1e2e"
+format = "[ $symbol($version) ]($style)"
+
+[python]
+symbol = " "
+style = "bg:#89dceb fg:#1e1e2e"
+format = "[ $symbol($version) ]($style)"
+
+[golang]
+symbol = " "
+style = "bg:#89dceb fg:#1e1e2e"
+format = "[ $symbol($version) ]($style)"
+
+[rust]
+symbol = " "
+style = "bg:#89dceb fg:#1e1e2e"
+format = "[ $symbol($version) ]($style)"
+
+[java]
+symbol = " "
+style = "bg:#89dceb fg:#1e1e2e"
+format = "[ $symbol($version) ]($style)"
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:#cba6f7 fg:#1e1e2e"
+format = "[ $time ]($style)"
