@@ -21,9 +21,13 @@ echo "  Fish config linked"
 ln -sf "$DOTFILES_DIR/starship/starship.toml" ~/.config/starship.toml
 echo "  Starship config linked"
 
+# Git
+ln -sf "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig
+echo "  Git config linked"
+
 echo ""
 echo "Done! Dependencies to install:"
-echo "  brew install fish starship bat eza fd ripgrep btop zoxide jq tldr delta lazygit"
+echo "  brew install fish starship bat eza fd ripgrep btop zoxide jq tldr delta lazygit yazi"
 echo ""
 echo "Add fish to allowed shells:"
 echo "  echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells"

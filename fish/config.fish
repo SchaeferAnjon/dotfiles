@@ -31,6 +31,16 @@ alias gl "git log --oneline --graph --decorate -20"
 alias gd "git diff"
 alias lg "lazygit"
 
+# File manager
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if set cwd (command cat -- $tmp); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        cd -- $cwd
+    end
+    rm -f -- $tmp
+end
+
 # Navigation
 alias .. "cd .."
 alias ... "cd ../.."

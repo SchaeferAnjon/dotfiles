@@ -9,6 +9,7 @@ My terminal setup: **Ghostty + Fish + Starship** with **Catppuccin Mocha** theme
 | [Ghostty](https://ghostty.org) | Terminal emulator | `ghostty/config` |
 | [Fish](https://fishshell.com) | Shell | `fish/config.fish` |
 | [Starship](https://starship.rs) | Prompt | `starship/starship.toml` |
+| [Git](https://git-scm.com) | Version control | `git/gitconfig` |
 
 ## CLI Tools
 
@@ -22,12 +23,13 @@ My terminal setup: **Ghostty + Fish + Starship** with **Catppuccin Mocha** theme
 - `lazygit` - git TUI
 - `jq` - JSON processor
 - `tldr` - simplified man pages
+- `yazi` - terminal file manager
 
 ## Install
 
 ```bash
 # Install dependencies
-brew install ghostty fish starship bat eza fd ripgrep btop zoxide jq tldr delta lazygit
+brew install ghostty fish starship bat eza fd ripgrep btop zoxide jq tldr delta lazygit yazi
 
 # Add fish to allowed shells
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
