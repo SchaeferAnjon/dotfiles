@@ -4,8 +4,24 @@
 [core]
 	autocrlf = input
 	quotepath = false
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Catppuccin Mocha
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
@@ -15,3 +31,7 @@
 	postBuffer = 524288000
 	lowSpeedLimit = 0
 	lowSpeedTime = 999999
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential

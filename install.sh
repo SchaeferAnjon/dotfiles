@@ -1,36 +1,55 @@
 #!/bin/bash
-# Dotfiles installer - symlinks configs to the right locations
+# Dotfiles installer
+# Usage: git clone <repo> ~/dotfiles && cd ~/dotfiles && ./install.sh
 
 set -e
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+echo "=== Dotfiles Installer ==="
+echo "Source: $DOTFILES_DIR"
+echo ""
 
-echo "Installing dotfiles from $DOTFILES_DIR"
+# --- 1. Homebrew ---
+if ! command -v brew &>/dev/null; then
+    echo "[1/4] Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    echo "[1/4] Homebrew OK"
+fi
 
-# Ghostty
-mkdir -p ~/.config/ghostty
-ln -sf "$DOTFILES_DIR/ghostty/config" ~/.config/ghostty/config
-echo "  Ghostty config linked"
+# --- 2. Packages ---
+echo "[2/4] Installing packages from Brewfile..."
+brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock
 
-# Fish
-mkdir -p ~/.config/fish
-ln -sf "$DOTFILES_DIR/fish/config.fish" ~/.config/fish/config.fish
-echo "  Fish config linked"
+# --- 3. Symlinks ---
+echo "[3/4] Creating symlinks..."
 
-# Starship
-ln -sf "$DOTFILES_DIR/starship/starship.toml" ~/.config/starship.toml
-echo "  Starship config linked"
+link() {
+    local src="$1" dst="$2"
+    mkdir -p "$(dirname "$dst")"
+    if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+        mv "$dst" "${dst}.bak"
+        echo "  backed up $dst"
+    fi
+    ln -sf "$src" "$dst"
+    echo "  $dst -> $src"
+}
 
-# Git
-ln -sf "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig
-echo "  Git config linked"
+link "$DOTFILES_DIR/git/gitconfig"          "$HOME/.gitconfig"
+link "$DOTFILES_DIR/fish/config.fish"       "$HOME/.config/fish/config.fish"
+link "$DOTFILES_DIR/ghostty/config"         "$HOME/.config/ghostty/config"
+link "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+
+# --- 4. Fish as default shell ---
+echo "[4/4] Setting Fish as default shell..."
+FISH_PATH="/opt/homebrew/bin/fish"
+if ! grep -q "$FISH_PATH" /etc/shells 2>/dev/null; then
+    echo "$FISH_PATH" | sudo tee -a /etc/shells
+fi
+if [ "$SHELL" != "$FISH_PATH" ]; then
+    chsh -s "$FISH_PATH"
+fi
 
 echo ""
-echo "Done! Dependencies to install:"
-echo "  brew install fish starship bat eza fd ripgrep btop zoxide jq tldr delta lazygit yazi"
-echo ""
-echo "Add fish to allowed shells:"
-echo "  echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells"
-echo ""
-echo "Set fish as default shell (optional):"
-echo "  chsh -s /opt/homebrew/bin/fish"
+echo "Done! Restart your terminal to see changes."

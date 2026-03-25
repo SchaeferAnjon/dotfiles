@@ -1,8 +1,13 @@
 # Fish Shell Configuration
 # Theme: Catppuccin Mocha + Starship Prompt
 
-# --- Homebrew ---
+# --- PATH ---
 fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/sbin
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.bun/bin
+fish_add_path $HOME/.orbstack/bin
+fish_add_path $HOME/npm-global/bin
 
 # --- Starship Prompt ---
 starship init fish | source
@@ -52,3 +57,16 @@ set -gx LANG "en_US.UTF-8"
 
 # --- Greeting ---
 set -g fish_greeting ""
+
+# --- Conda / Mamba ---
+if test -f $HOME/miniforge3/etc/fish/conf.d/conda.fish
+    source $HOME/miniforge3/etc/fish/conf.d/conda.fish
+end
+if test -f $HOME/miniforge3/etc/fish/conf.d/mamba.fish
+    source $HOME/miniforge3/etc/fish/conf.d/mamba.fish
+end
+
+# --- mise (runtime version manager) ---
+if test -f $HOME/.local/bin/mise
+    $HOME/.local/bin/mise activate fish | source
+end
